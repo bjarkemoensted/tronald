@@ -1,15 +1,7 @@
-import gpt_2_simple as gpt2
 import json
 import pandas as pd
 
 import config
-
-
-def download_gpt_model(model_name=None):
-    """Downloads a pre-trained GPT-2 model and stores it locally."""
-    if not model_name:
-        model_name = config.model_name
-    gpt2.download_gpt2(model_dir=config.model_dir, model_name=model_name)
 
 
 def get_links(text):
@@ -65,7 +57,7 @@ def process_tweet(text):
     return res
 
 
-def process_tweets(earliest=None, latest=None, include_urls=False):
+def process_tweets(earliest="2015-05-01", latest=None, include_urls=False):
     """Processes all tweets and saves them."""
     df = load_corpus(earliest=earliest, latest=latest)
     if not include_urls:
