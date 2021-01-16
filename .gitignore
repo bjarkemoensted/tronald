@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignore virtual environment stuff
+.venv/
+# Ignore folders where model stuff is stored
+model/
+checkpoint/
+
+# Using a notebook to play around in. Don't include that.
+sandbox.ipynb
