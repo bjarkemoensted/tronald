@@ -16,7 +16,7 @@ class TweetGenerator:
         self.sess = gpt2.start_tf_sess()
         gpt2.load_gpt2(self.sess)
 
-    def generate(self):
+    def generate(self, temperature=0.90):
         texts = gpt2.generate(
             self.sess,
             return_as_list=True,
@@ -24,7 +24,7 @@ class TweetGenerator:
             model_dir=config.model_dir,
             length=config.generate_length,
             truncate=config.tweet_delimiter,
-            temperature=0.90)
+            temperature=temperature)
 
         text = texts[0]
         longest_par = max(text.split("\n\n"), key=lambda s: len(s))
@@ -32,7 +32,7 @@ class TweetGenerator:
         return longest_par
 
 
-def train_model(steps=100):
+def train_model(steps=1000):
     sess = gpt2.start_tf_sess()
     gpt2.finetune(
         sess,
