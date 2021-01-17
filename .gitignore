@@ -133,6 +133,10 @@ dmypy.json
 # Ignore folders where model stuff is stored
 model/
 checkpoint/
+samples/
 
 # Using a notebook to play around in. Don't include that.
 sandbox.ipynb
+
+# Don't upload secret stuff to a public repo. Duh.
+data/credentials.json
