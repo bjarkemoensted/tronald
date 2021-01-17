@@ -67,3 +67,10 @@ def process_tweets(earliest="2015-05-01", latest=None, include_urls=False):
     output = "\n\n".join(processed)
     with open(config.processed_text_file, "w") as f:
         f.write(output)
+
+
+def read_credentials():
+    fn = config.credentials_file
+    with open(fn) as f:
+        d = json.load(f)
+    return d
