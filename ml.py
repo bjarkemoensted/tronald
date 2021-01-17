@@ -12,11 +12,18 @@ def download_model(model_name=None):
 
 
 class TweetGenerator:
+    """Just a class to handle content generation."""
+
     def __init__(self):
         self.sess = gpt2.start_tf_sess()
         gpt2.load_gpt2(self.sess)
 
     def generate(self, temperature=0.90):
+        """Generate a content for a single tweet.
+        temperature is a free parameter in the softmax function in the final neural network layer which controls
+        'randomness', i.e. low temperatures gives content with more 'boring' words that are more common in training
+        data, whereas higher temperatures gives more random content."""
+
         texts = gpt2.generate(
             self.sess,
             return_as_list=True,
@@ -26,13 +33,17 @@ class TweetGenerator:
             truncate=config.tweet_delimiter,
             temperature=temperature)
 
+        # gpt returns a list by default. Grab the text in it.
         text = texts[0]
+        # Training data is separated by double newlines. Grab the longest paragraph
         longest_par = max(text.split("\n\n"), key=lambda s: len(s))
 
         return longest_par
 
 
 def train_model(steps=1000):
+    """Trains the GPT-2 model for the specified number of steps."""
+
     sess = gpt2.start_tf_sess()
     gpt2.finetune(
         sess,
