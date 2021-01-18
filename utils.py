@@ -1,7 +1,16 @@
+import datetime
 import json
 import pandas as pd
 
 import config
+
+
+def format_epoch_time(timestamp):
+    """Turns an epoch timestamp into a human readable string."""
+    dt = datetime.datetime.fromtimestamp(timestamp)
+    format_ = "%H:%M:%S"
+    res = dt.strftime(format_)
+    return res
 
 
 def get_links(text):

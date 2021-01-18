@@ -18,6 +18,7 @@ class TweetGenerator:
     def __init__(self):
         self.sess = gpt2.start_tf_sess()
         gpt2.load_gpt2(self.sess)
+        self.api = None
 
     def generate(self, temperature=0.90):
         """Generate a content for a single tweet.
@@ -40,6 +41,18 @@ class TweetGenerator:
         longest_par = max(text.split("\n\n"), key=lambda s: len(s))
 
         return longest_par
+
+    def ensure_api(self):
+        """Makes sure we have a tweepy API instance to interface with Twitter."""
+        if self.api is None:
+            self.api = twitter_tools.get_api()
+        #
+
+    def post_random_tweet(self, temperature=0.90):
+        """Makes a random tweet and posts it to Twitter."""
+        text = self.generate(temperature=temperature)
+        self.ensure_api()
+        self.api.update_status(text)
 
 
 def train_model(steps=1000):

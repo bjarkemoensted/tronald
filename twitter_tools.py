@@ -1,10 +1,10 @@
 import tweepy
 
-import config
 import utils
 
 
 def get_api(credentials=None):
+    """Returns a tweepy api object."""
     if not credentials:
         credentials = utils.read_credentials()
 
@@ -16,5 +16,6 @@ def get_api(credentials=None):
 
 
 def tweet(s):
+    """Quick n dirty method to post a tweet."""
     api = get_api()
     api.update_status(s)

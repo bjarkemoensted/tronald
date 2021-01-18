@@ -30,14 +30,14 @@ class Task:
         return s
 
 
-class Schedule:
-    """Schedule class to create and organize tasks."""
+class Agenda:
+    """Agenda class to create and organize tasks."""
 
     def __init__(self):
         self.tasks = []
 
     def remove_completed_tasks(self):
-        """Remove from schedule tasks that have run."""
+        """Remove from agenda tasks that have run."""
         for i in range(len(self.tasks) - 1, -1, -1):
             if self.tasks[i].completed:
                 del self.tasks[i]
@@ -45,13 +45,13 @@ class Schedule:
         #
 
     def __str__(self):
-        s = "Schedule holding %d tasks." % len(self.tasks)
+        s = "Agenda consisting of %d tasks." % len(self.tasks)
         if self.tasks:
             s += "\n" + "\n".join([str(task) for task in self.tasks[:5]])
         return s
 
     def add_task(self, task):
-        """Adds a task to the schedule."""
+        """Adds a task to the agenda."""
         self.tasks.append(task)
         self.tasks.sort(key=lambda t: t.due_at)
 
