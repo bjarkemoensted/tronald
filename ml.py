@@ -1,4 +1,5 @@
 import gpt_2_simple as gpt2
+from tweepy.error import TweepError
 
 import config
 import twitter_tools
@@ -15,10 +16,11 @@ def download_model(model_name=None):
 class TweetGenerator:
     """Just a class to handle content generation."""
 
-    def __init__(self):
+    def __init__(self, verbose=True):
         self.sess = gpt2.start_tf_sess()
         gpt2.load_gpt2(self.sess)
         self.api = None
+        self.verbose = verbose
 
     def generate(self, temperature=0.90):
         """Generate a content for a single tweet.
@@ -52,7 +54,13 @@ class TweetGenerator:
         """Makes a random tweet and posts it to Twitter."""
         text = self.generate(temperature=temperature)
         self.ensure_api()
-        self.api.update_status(text)
+        try:
+            self.api.update_status(text)
+        except TweepError:
+            print("Content too long (%d characters)" % len(text))
+        if self.verbose:
+            ts = utils.get_current_timestring()
+            print("At %s, tweeted %s." % (ts, text))
 
 
 def train_model(steps=1000):

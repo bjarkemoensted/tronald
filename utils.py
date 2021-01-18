@@ -1,6 +1,7 @@
 import datetime
 import json
 import pandas as pd
+import time
 
 import config
 
@@ -11,6 +12,12 @@ def format_epoch_time(timestamp):
     format_ = "%H:%M:%S"
     res = dt.strftime(format_)
     return res
+
+
+def get_current_timestring():
+    now = time.time()
+    s = format_epoch_time(now)
+    return s
 
 
 def get_links(text):
